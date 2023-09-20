@@ -1,0 +1,127 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    alb.ingress.kubernetes.io/actions.ssl-redirect: '{"Type": "redirect", "RedirectConfig": { "Protocol": "HTTPS", "Port": "443", "StatusCode": "HTTP_301"}}'
+    alb.ingress.kubernetes.io/group.name: external
+    alb.ingress.kubernetes.io/healthcheck-path: /
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS":443}]'
+    alb.ingress.kubernetes.io/load-balancer-attributes: idle_timeout.timeout_seconds=300
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-group-attributes: deregistration_delay.timeout_seconds=35
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/conditions.hellomsg-0: >
+      [{"field":"query-string","queryStringConfig":{"values":[{"key":"server","value":"1"}]}}]
+    alb.ingress.kubernetes.io/conditions.hellomsg-1: >
+      [{"field":"query-string","queryStringConfig":{"values":[{"key":"server","value":"2"}]}}]
+    alb.ingress.kubernetes.io/conditions.hellomsg-2: >
+      [{"field":"query-string","queryStringConfig":{"values":[{"key":"server","value":"3"}]}}]
+    alb.ingress.kubernetes.io/conditions.hellomsg-3: >
+      [{"field":"query-string","queryStringConfig":{"values":[{"key":"server","value":"4"}]}}]
+    alb.ingress.kubernetes.io/conditions.hellomsg-4: >
+      [{"field":"query-string","queryStringConfig":{"values":[{"key":"server","value":"5"}]}}]
+    alb.ingress.kubernetes.io/conditions.hellomsg-5: >
+      [{"field":"query-string","queryStringConfig":{"values":[{"key":"server","value":"6"}]}}]
+    alb.ingress.kubernetes.io/conditions.hellomsg-6: >
+      [{"field":"query-string","queryStringConfig":{"values":[{"key":"server","value":"7"}]}}]
+    alb.ingress.kubernetes.io/conditions.hellomsg-7: >
+      [{"field":"query-string","queryStringConfig":{"values":[{"key":"server","value":"8"}]}}]
+    alb.ingress.kubernetes.io/conditions.hellomsg-8: >
+      [{"field":"query-string","queryStringConfig":{"values":[{"key":"server","value":"9"}]}}]
+    alb.ingress.kubernetes.io/conditions.hellomsg-9: >
+      [{"field":"query-string","queryStringConfig":{"values":[{"key":"server","value":"10"}]}}]
+    prometheus.io/probe: "true"
+  name: hellomsg
+spec:
+  ingressClassName: alb
+  rules:
+    - host: msg.priitr-test.entigo.dev
+      http:
+        paths:
+          - backend:
+              service:
+                name: ssl-redirect
+                port:
+                  name: use-annotation
+            path: /*
+            pathType: ImplementationSpecific
+          - backend:
+              service:
+                name: hellomsg-0
+                port:
+                  number: 3000
+            path: /*
+            pathType: ImplementationSpecific
+          - backend:
+              service:
+                name: hellomsg-1
+                port:
+                  number: 3000
+            path: /*
+            pathType: ImplementationSpecific
+          - backend:
+              service:
+                name: hellomsg-2
+                port:
+                  number: 3000
+            path: /*
+            pathType: ImplementationSpecific
+          - backend:
+              service:
+                name: hellomsg-3
+                port:
+                  number: 3000
+            path: /*
+            pathType: ImplementationSpecific 
+          - backend:
+              service:
+                name: hellomsg-4
+                port:
+                  number: 3000
+            path: /*
+            pathType: ImplementationSpecific
+          - backend:
+              service:
+                name: hellomsg-5
+                port:
+                  number: 3000
+            path: /*
+            pathType: ImplementationSpecific
+          - backend:
+              service:
+                name: hellomsg-6
+                port:
+                  number: 3000
+            path: /*
+            pathType: ImplementationSpecific
+          - backend:
+              service:
+                name: hellomsg-7
+                port:
+                  number: 3000
+            path: /*
+            pathType: ImplementationSpecific
+          - backend:
+              service:
+                name: hellomsg-8
+                port:
+                  number: 3000
+            path: /*
+            pathType: ImplementationSpecific
+          - backend:
+              service:
+                name: hellomsg-9
+                port:
+                  number: 3000
+            path: /*
+            pathType: ImplementationSpecific
+          - backend:
+              service:
+                name: hellomsg
+                port:
+                  number: 3000
+            path: /*
+            pathType: ImplementationSpecific
+  tls:
+    - hosts:
+        - msg.priitr-test.entigo.dev
