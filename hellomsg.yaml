@@ -196,10 +196,10 @@ spec:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
               - matchExpressions:
-                  - key: node-group
+                  - key: spot
                     operator: In
                     values:
-                      - web-workers
+                      - true
       containers:
       - image: priitrent/hellomsg:3 
         name: hellomsg
@@ -212,7 +212,7 @@ spec:
             fieldRef:
               fieldPath: metadata.labels['statefulset.kubernetes.io/pod-name']
       tolerations:
-        - key: "node-group"
+        - key: "spot"
           operator: Equal
-          value: web-workers
+          value: true
           effect: NoSchedule
