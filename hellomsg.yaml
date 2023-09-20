@@ -199,7 +199,7 @@ spec:
                   - key: spot
                     operator: In
                     values:
-                      - true
+                      - "true"
       containers:
       - image: priitrent/hellomsg:3 
         name: hellomsg
@@ -214,5 +214,5 @@ spec:
       tolerations:
         - key: "spot"
           operator: Equal
-          value: true
+          value: "true"
           effect: NoSchedule
